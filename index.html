@@ -12,20 +12,22 @@
 <!-- Header -->
 <header>
     <button class="btn" id="high-score-btn" type="submit">View High Scores</button> 
-    <h2 class="timer" id="timer">Time: 1:00</h2> 
+    <h2 class="time-display" id="time-display">Time: 1:00</h2> 
 </header>
 
-<!-- Main page -->
 <body class="body">
+
+<!-- Main page -->
   <div class="main-screen">
   <section class="main-text">
     <h1 class="title">Code Quiz</h1>
     <p> Try to answer the code related questions within the time limit. Keep in mind that incorrect answers will penalize your score and time by ten seconds.</p>
+    <button class="btn" id="start-btn" type="submit">Start!</button>
   </section>
   </div>
 
   <!-- high score page -->
-  <div class="high-scores" id="high-scores">
+  <div class="high-scores-screen" id="high-scores-screen">
     <h2>High Scores</h2>
     <table class="high-scores-table" id="high-scores-table">
         <tr>
@@ -38,7 +40,7 @@
   </div>
 
   <!-- Final Score Page -->
-  <div class="final-score-page" id="final-score">
+  <div class="final-score-screen" id="final-score-screen">
     <h2>All Done!</h2>
     <p>Your final score is <span id="final-score">Score</span>!</p>
   </div>
@@ -52,7 +54,7 @@
   </form>
 
   <!-- Questions -->
-  <div class="questions" id="questions">
+  <div class="question-pages" id="question-pages">
     <!-- insert questions -->
   </div>
 
