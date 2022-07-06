@@ -9,54 +9,66 @@
   <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
-<!-- Header -->
-<header>
-    <button class="btn" id="high-score-btn" type="submit">View High Scores</button> 
-    <h2 class="time-display" id="time-display">Time: 1:00</h2> 
-</header>
+<body class="bodyTag">
 
-<body class="body">
 
-<!-- Main page -->
-  <div class="main-screen">
-  <section class="main-text">
-    <h1 class="title">Code Quiz</h1>
-    <p> Try to answer the code related questions within the time limit. Keep in mind that incorrect answers will penalize your score and time by ten seconds.</p>
-    <button class="btn" id="start-btn" type="submit">Start!</button>
-  </section>
-  </div>
-
-  <!-- high score page -->
-  <div class="high-scores-screen" id="high-scores-screen">
-    <h2>High Scores</h2>
-    <table class="high-scores-table" id="high-scores-table">
-        <tr>
-            <th>Ranking. </th>
-            <th>Score. </th>
-            <th>Initials. </th> 
-        </tr>
-    </table>
-    <button class="btn" id="go-back-btn" type="submit">Go Back</button>
-  </div>
-
-  <!-- Final Score Page -->
-  <div class="final-score-screen" id="final-score-screen">
-    <h2>All Done!</h2>
-    <p>Your final score is <span id="final-score">Score</span>!</p>
-  </div>
-
-  <form class="high-score-form" id="high-score-form">
-    <div class="form-group">
-        <label for="initials">Enter Initials</label>
-        <input type="text" id="initials" name="initials" value="">
-        <button class="btn" id="submit-initials-btn" type="submit">Submit</button>
+<section class ="container">
+    <div id="top" class="row">
+        <div id="view-high-score-btn" class="col-6>" style="color:blueviolet; font-size: 25px; justify-self: start;">View High Scores</div> 
+        <h2 class="time-display col-6" id="time-display">Time: <span id="time-display">1:00</span></h2> 
     </div>
-  </form>
+</section>
+
+<main class="container">
+    <div id="start-page-container" class="start-page-container row">
+      <h2 class="col-12 p-5"></h2>
+      <p id="high" class="col-12 p-5">Coding Quiz
+          <br/>
+          Try to answer the code related questions within the time limit. Keep in mind that incorrect answers will penalize your score and time by ten seconds.</p>
+      <button class="btn" id="start-btn">Start!</button>
+    </div>
+  
+    <!-- high score page -->
+    <div class="high-scores-container" id="container" style="display: none;">
+      <h2>High Scores</h2>
+      <table class="high-scores-table" id="high-scores-table">
+          <tr>
+              <th>Ranking. </th>
+              <th>Score. </th>
+              <th>Initials. </th> 
+          </tr>
+      </table>
+      <button class="btn" id="go-back-btn">Go Back</button>
+    </div>
+  
+    <!-- Final Score Page -->
+    <div class="final-score-form-container" id="final-score-form-container" style="display: none;">
+      <div class="row">
+          <h2>All Done!</h2>
+      </div>
+      <div class="row"><
+          <p>Your final score is <span id="final-score">Score</span>!</p>
+      </div>
+    
+      <div class="row">
+          <form class="high-score-form" id="high-score-form">
+              <div class="form-group">
+                  <label for="initials">Enter Initials</label>
+                  <input type="text" id="initials" name="initials" value="">
+                  <button class="btn" id="submit-initials-btn" type="submit">Submit</button>
+              </div>
+          </form>
+      </div>
+    </div>
 
   <!-- Questions -->
-  <div class="question-pages" id="question-pages">
+  <div class="questions-container col-12" id="questions-container" style="display: none;">
     <!-- insert questions -->
   </div>
+
+  <div class="results-container" style="display: none;"></div>
+
+  </main>
 
   <!-- Footer -->
   <footer>
@@ -64,6 +76,7 @@
   </footer>
 
   <!-- link JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="./assets/js/script.js"></script>
 
 </body>

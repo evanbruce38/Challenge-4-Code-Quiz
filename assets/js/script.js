@@ -1,12 +1,12 @@
 // Variables //
-var mainScreen = document.getElementById("main-screen");
-var questionPages = document.getElementById("question-pages");
+var mainScreen = document.getElementById("start-page-container");
+var questionPages = document.getElementById("questions-container");
 var startBtn = document.getElementById("start-btn");
-var highScoreBtn = document.getElementById("high-score-btn");
-var highScoresScreen = document.getElementById("high-scores-screen");
-var timerText = document.getElementById("timer");
+var viewHighScoreButton = document.getElementById("view-high-score-btn");
+var highScoresScreen = document.getElementById("high-scores-container");
+var timerText = document.getElementById("time-display");
 var goBackBtn = document.getElementById("go-back-btn");
-var finalScoreScreen = document.getElementById("final-score-screen");
+var finalScoreScreen = document.getElementById("final-score-form-container");
 var highScoresTable = document.getElementById("high-scores-table");
 var timeLimit = 60 * 1;
 var intervalId = null;
@@ -24,63 +24,63 @@ var currentUserScore = 0;
 var highScores = [];
 
 // Array of questions //
-var questionList = [
+var questions = [
     {
-        questionNumber: 1
-        question: "What is github?"
-        options: [
-            "An online repository".
-            "A blog",
-            "A travel agency",
-            "An online computer store",
-        ],
-        correctAnswer: "An online repository",
+      questionNumber: 1,
+      question: "What is Github?",
+      options: [
+        "An online repository",
+        "A blog",
+        "A travel agency",
+        "An online computer store",
+      ],
+      correctAnswer: "An online repository",
     },
     {
-        questionNumber: 2
-        question: "What does (ul) stand for in HTML?"
-        options: [
-            "Uneven lanes".
-            "Urgent lead",
-            "Unequal levels",
-            "Unordered list",
-        ],
-        correctAnswer: "Unordered list",
+      questionNumber: 2,
+      question: "What does the ( li ) stand for in HTML?",
+      options: [
+        "Uneven lanes",
+        "Urgent lead",
+        "Unequal levels",
+        "Unordered list",
+    ],
+      correctAnswer: "Unordered list",
     },
     {
-        questionNumber: 3
-        question: "What does CSS stand for"
-        options: [
-            "Careful string series".
-            "Cascading style sheets",
-            "Casual surge storage",
-            "Clashing source standards",
-        ],
-        correctAnswer: "Cascading style sheets",
-    }, 
-    {
-        questionNumber: 4
-        question: "Which command creates a file in the command line?"
-        options: [
-            "cd".
-            "touch",
-            "mkdir",
-            "git init",
-        ],
-        correctAnswer: "mkdir",
-    }, 
-    {
-        questionNumber: 5
-        question: "What is Chrome devtools?"
-        options: [
-            "An in browser web developer system".
-            "An email website",
-            "A serach engine",
-            "An online map",
-        ],
-        correctAnswer: "An in browser web developer system",
+      questionNumber: 3,
+      question: "What does CSS stand for?",
+      options: [
+        "Careful string series",
+        "Cascading Style Sheets",
+        "Casual surge storage",
+        "Clashing source standards",
+      ],
+      correctAnswer: "Cascading Style Sheets",
     },
-];
+    {
+      questionNumber: 4,
+      question: "Which command creates a file in the command line?",
+      options: [
+        "cd",
+        "touch",
+        "mkdir",
+        "git init",
+    ],
+      correctAnswer: "mkdir",
+    },
+    {
+      questionNumber: 5,
+      question: "What is chrome devtools?",
+      options: [
+        "An in-browser web developer system",
+        "An email website",
+        "A search engine",
+        "An online map",
+      ],
+      correctAnswer: "An in-browser web developer system",
+    },
+  ];
 
 // grade question function //
 var gradeQuestion = function (event) {
@@ -90,7 +90,7 @@ var gradeQuestion = function (event) {
     var question = questions[currentQuestionIndex];
     var quEl = document.getElementById("qu" + question.questionNumber);
 
-    if (quEl = !== null) {
+    if (quEl !== null) {
         quEl.style = "display: block;";
     }
 
@@ -106,7 +106,7 @@ var gradeQuestion = function (event) {
             currentUserScore = currentUserScore + 10;
         }
     } else {
-        is (pEl !== null) {
+        if (pEl !== null) {
             pEl.innerHTML = "Wrong!"
         }
 
@@ -158,13 +158,13 @@ var buildQuizElements = function() {
         listItemEl.setAttribute("style", "list-style-type: none;");
         var buttonEl = document.createElement(buttonTag);
         buttonEl.innerHTML = optionText;
-        buttonEl.addEventListener("click", evaluateAnswer);
+        buttonEl.addEventListener("click", gradeQuestion);
         buttonEl.setAttribute("class", "btn btn-primary");
         listItemEl.appendChild(buttonEl);
         orderedListEl.appendChild(listItemEl);
       }
 
-    var questionContainer = document.getElementById("question-pages");
+    var questionContainer = document.getElementById("questions-container");
     questionContainer.appendChild(questionEl); 
     questionContainer.appendChild(orderedListEl);
     questionContainer.appendChild(quEl);
@@ -184,7 +184,7 @@ var viewHighScores = function () {
 
     highScores = sortedHighScores;
     timerText.setAttribute("style", "display: none;");
-    highScoreBtn.setAttribute("style", "display: none;");
+    viewHighScoreButton.setAttribute("style", "display: none;");
     mainScreen.setAttribute("style", "display: none;");
     highScoresScreen.setAttribute("style", "display: none;");
     questionPages.setAttribute("style", "display: none;");
@@ -211,12 +211,12 @@ var viewHighScores = function () {
     }
 };
 
-highScoreBtn.addEventListener("click", viewHighScores);
+viewHighScoreButton.addEventListener("click", viewHighScores);
 
 // go back button //
 var goBack = function () {
     timerText.setAttribute("style", "display: block;");
-    highScoreButton.setAttribute("style", "display: block;");
+    viewHighScoreButton.setAttribute("style", "display: block;");
     mainScreen.setAttribute("style", "display: block;");
     finalScoreScreen.setAttribute("style", "display: none;");
 };
@@ -248,7 +248,7 @@ var startQuiz = function () {
     gameOver = false;
     currentQuestionIndex = 0;
     mainScreen.setAttribute("style", "display: none;");
-    questionsPages.setAttribute("style", "display: block;");
+    questionPages.setAttribute("style", "display: block;");
     buildQuizElements();
     startTimer(timeLimit, display);
 };
@@ -258,7 +258,7 @@ var endQuiz = function () {
 gameOver = true;
 clearInterval(intervalId);
 console.log("That's all, thanks for playing!");
-highScoreButton.setAttribute("style", "display: block;");
+viewHighScoreButton.setAttribute("style", "display: block;");
 questionsPages.setAttribute("style", "display: none;");
 finalScoreScreen.setAttribute("style", "display: block;");
 var finalScore = document.getElementById("final-score")
@@ -268,7 +268,7 @@ questionPages.innerHTML = "";
 
 startBtn.addEventListener("click", startQuiz);
 
-$("high-score-form .btn-primary").click(function (event) {
+$("#high-score-form .btn-primary").click(function (event) {
     event.preventDefault();
     event.target.disabled = true;
     highScores = JSON.parse(localStorage.getItem("highScores"));
