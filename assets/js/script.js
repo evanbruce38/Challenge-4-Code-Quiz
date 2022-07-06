@@ -4,7 +4,7 @@ var questionPages = document.getElementById("question-pages");
 var startBtn = document.getElementById("start-btn");
 var highScoreBtn = document.getElementById("high-score-btn");
 var highScoresScreen = document.getElementById("high-scores-screen");
-var timer = document.getElementById("timer");
+var timerText = document.getElementById("timer");
 var goBackBtn = document.getElementById("go-back-btn");
 var finalScoreScreen = document.getElementById("final-score-screen");
 var highScoresTable = document.getElementById("high-scores-table");
@@ -15,7 +15,7 @@ var display = document.querySelector("#time-display");
 var correctAnswerCount = 0;
 var wrongAnswerCount = 0;
 var masterTimer = null;
-var correctQuestions = 0;
+var correctQuestionsIndex = 0;
 var delayInMilliseconds = 2500;
 var minutes = 0;
 var seconds = 0;
@@ -82,6 +82,7 @@ var questionList = [
     },
 ];
 
+// grade question function //
 var gradeQuestion = function (event) {
     event.target.disabled = true;
 
@@ -125,3 +126,104 @@ var gradeQuestion = function (event) {
         endQuiz();
     }
 };
+
+// build quiz elements function //
+var buildQuizElements = function() {
+    var currentQuestion = questions[currentQuestionIndex];
+    console.log(currentQuestion);
+
+    var questionTag = "h3";
+    var OrederedListTag = "ol";
+    var listItemTag = "li";
+    var quTag = "qu"
+    var pTag = "p";
+    var buttonTag = "button";
+
+    var questionEl = document.createElement(questionTag);
+    questionEl.innerHTML = currentQuestion.question;
+
+    var quEl = document.createElement(quTag);
+    var pEl = document.createElement(pTag);
+
+    quEl.setAttribute("id", "hr" + currentQuestion.questionNumber); 
+    quEl.setAttribute("style", "display: none;");
+    pEl.setAttribute("id", "p" + currentQuestion.questionNumber); 
+    pEl.setAttribute("style", "display: none;");
+
+    var orderedListEl = document.createElement(OrederedListTag);
+
+    for (i = 0; i < currentQuestion.options.length; i++) {
+        var optionText = currentQuestion.options[i]; 
+        var listItemEl = document.createElement(listItemTag);
+        listItemEl.setAttribute("style", "list-style-type: none;");
+        var buttonEl = document.createElement(buttonTag);
+        buttonEl.innerHTML = optionText;
+        buttonEl.addEventListener("click", evaluateAnswer);
+        buttonEl.setAttribute("class", "btn btn-primary");
+        listItemEl.appendChild(buttonEl);
+        orderedListEl.appendChild(listItemEl);
+      }
+
+    var questionContainer = document.getElementById("question-pages");
+    questionContainer.appendChild(questionEl); 
+    questionContainer.appendChild(orderedListEl);
+    questionContainer.appendChild(quEl);
+    questionContainer.appendChild(pEl);
+};
+
+// high scores button function //
+var viewHighScores = function () {
+    highScores = JSON.parse(localStorage.getItem("highScores"));
+    if (highScores === null) {
+        highScores = [];
+    }
+
+    var sortedHighScores = highScores.sort((a, b) =>
+    a. score < b.score 1 : -1
+    );
+
+    highScores = sortedHighScores;
+    timerText.setAttribute("style", "display: none;");
+    highScoreBtn.setAttribute("style", "display: none;");
+    mainScreen.setAttribute("style", "display: none;");
+    highScoresScreen.setAttribute("style", "display: none;");
+    questionPages.setAttribute("style", "display: none;");
+    finalScoreScreen.setAttribute("style", "display: none;");
+
+    for (var i = 0; i < sortedHighScores.length; i++) {
+        var currentUserScore = sortedHighScores[i];
+
+        var tdRankEL = document.createElement("td");
+        tdRankEL.innerHTML = i + 1;
+
+        var tdInitialsEl = document.createElement("td");
+        tdInitialsEl.innerHTML = currentUserScore.initials;
+
+        var tdScoresEl = document.createElement("td");
+        tdScoresEl.innerHTML = currentUserScore.score;
+
+        var trEl = document.createElement("tr");
+
+        trEl.appendChild(tdRankEl);
+        trEl.appendChild(tdInitialsEl);
+        trEl.appendChild(tdScoresEl);
+        highScoresTable.appendChild(trEl);
+    }
+};
+
+highScoreBtn.addEventListener("click", viewHighScores);
+
+// go back button //
+var goBack = function () {
+    timerText.setAttribute("style", "display: block;");
+    highScoreButton.setAttribute("style", "display: block;");
+    mainScreen.setAttribute("style", "display: block;");
+    finalScoreScreen.setAttribute("style", "display: none;");
+};
+
+goBackBtn.addEventListener("click", goBack);
+
+
+
+
+
