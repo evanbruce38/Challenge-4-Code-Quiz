@@ -16,7 +16,7 @@ var correctAnswerCount = 0;
 var wrongAnswerCount = 0;
 var masterTimer = null;
 var correctQuestionsIndex = 0;
-var delayInMilliseconds = 2500;
+var delayInMilliseconds = 1500;
 var minutes = 0;
 var seconds = 0;
 var timer = null;
@@ -38,7 +38,7 @@ var questions = [
     },
     {
       questionNumber: 2,
-      question: "What does the ( li ) stand for in HTML?",
+      question: "What does (ul) stand for in HTML?",
       options: [
         "Uneven lanes",
         "Urgent lead",
@@ -110,7 +110,7 @@ var gradeQuestion = function (event) {
             pEl.innerHTML = "Wrong!"
         }
 
-        timer = timer - 20;
+        timer = timer - 15;
     }
 
     if (currentQuestionIndex < questions.length - 1) {
@@ -118,8 +118,8 @@ var gradeQuestion = function (event) {
 
         setTimeout(function () {
 
-            var nextQuestion = document.getElementById("questions-pages");
-            nextQuestion.innerHTML = "";
+            var parentDiv = document.getElementById("questions-container");
+            parentDiv.innerHTML = "";
             buildQuizElements();
         }, delayInMilliseconds);
     } else {
@@ -159,7 +159,7 @@ var buildQuizElements = function() {
         var buttonEl = document.createElement(buttonTag);
         buttonEl.innerHTML = optionText;
         buttonEl.addEventListener("click", gradeQuestion);
-        buttonEl.setAttribute("class", "btn btn-primary");
+        buttonEl.setAttribute("class", "btn");
         listItemEl.appendChild(buttonEl);
         orderedListEl.appendChild(listItemEl);
       }
@@ -186,7 +186,7 @@ var viewHighScores = function () {
     timerText.setAttribute("style", "display: none;");
     viewHighScoreButton.setAttribute("style", "display: none;");
     mainScreen.setAttribute("style", "display: none;");
-    highScoresScreen.setAttribute("style", "display: none;");
+    highScoresScreen.setAttribute("style", "display: block;");
     questionPages.setAttribute("style", "display: none;");
     finalScoreScreen.setAttribute("style", "display: none;");
 
@@ -218,7 +218,7 @@ var goBack = function () {
     timerText.setAttribute("style", "display: block;");
     viewHighScoreButton.setAttribute("style", "display: block;");
     mainScreen.setAttribute("style", "display: block;");
-    finalScoreScreen.setAttribute("style", "display: none;");
+    highScoresScreen.setAttribute("style", "display: none;");
 };
 
 goBackBtn.addEventListener("click", goBack);
@@ -231,8 +231,8 @@ var startTimer = function (duration, display) {
         mimnutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
 
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
+        minutes = minutes < 10 ?  + minutes : minutes;
+        seconds = seconds < 10 ?  + seconds : seconds;
 
         display.textContent = minutes + ":" + seconds;
 
@@ -259,7 +259,7 @@ gameOver = true;
 clearInterval(intervalId);
 console.log("That's all, thanks for playing!");
 viewHighScoreButton.setAttribute("style", "display: block;");
-questionsPages.setAttribute("style", "display: none;");
+questionPages.setAttribute("style", "display: none;");
 finalScoreScreen.setAttribute("style", "display: block;");
 var finalScore = document.getElementById("final-score")
 finalScore.innerHTML = currentUserScore;

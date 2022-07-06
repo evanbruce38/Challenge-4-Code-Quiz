@@ -1,1 +1,22 @@
+li {
+    margin-bottom: 10px;
+    
+};
 
+body {
+    display: flex;
+
+}
+
+ #start-page-container, #high, h3 {
+     display:flex;
+     justify-content: center;
+     font-weight: bolder;font-size: 40px; margin-top: 100px;
+ };
+
+.btn {
+    color: teal;
+    display: inline;
+}
+
+ }
