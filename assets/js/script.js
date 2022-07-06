@@ -9,7 +9,7 @@ var goBackBtn = document.getElementById("go-back-btn");
 var finalScoreScreen = document.getElementById("final-score-screen");
 var highScoresTable = document.getElementById("high-scores-table");
 var timeLimit = 60 * 1;
-var interValId = null;
+var intervalId = null;
 var gameOver = false;
 var display = document.querySelector("#time-display");
 var correctAnswerCount = 0;
@@ -179,7 +179,7 @@ var viewHighScores = function () {
     }
 
     var sortedHighScores = highScores.sort((a, b) =>
-    a. score < b.score 1 : -1
+    a. score < b.score ? 1 : -1
     );
 
     highScores = sortedHighScores;
@@ -223,7 +223,75 @@ var goBack = function () {
 
 goBackBtn.addEventListener("click", goBack);
 
+// timer functions //
+var startTimer = function (duration, display) {
+    (timer = duration), minutes, seconds;
+    masterTimer = timer;
+    intervalId = setInterval(function () {
+        mimnutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
 
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
 
+        display.textContent = minutes + ":" + seconds;
 
+        if (--timer <= 0 && gameOver === false) {
+            timer = duration;
+            endQuiz();
+        }
+    }, 1000);
+};
 
+// start quiz function //
+var startQuiz = function () {
+    gameOver = false;
+    currentQuestionIndex = 0;
+    mainScreen.setAttribute("style", "display: none;");
+    questionsPages.setAttribute("style", "display: block;");
+    buildQuizElements();
+    startTimer(timeLimit, display);
+};
+
+// end quiz function //
+var endQuiz = function () {
+gameOver = true;
+clearInterval(intervalId);
+console.log("That's all, thanks for playing!");
+highScoreButton.setAttribute("style", "display: block;");
+questionsPages.setAttribute("style", "display: none;");
+finalScoreScreen.setAttribute("style", "display: block;");
+var finalScore = document.getElementById("final-score")
+finalScore.innerHTML = currentUserScore;
+questionPages.innerHTML = "";
+};
+
+startBtn.addEventListener("click", startQuiz);
+
+$("high-score-form .btn-primary").click(function (event) {
+    event.preventDefault();
+    event.target.disabled = true;
+    highScores = JSON.parse(localStorage.getItem("highScores"));
+    if (highScores = null) {
+        highScores = [];
+    }
+
+    var initials = $("#initials").val();
+
+    if (initials) {
+        var newScore = {
+            initials: initials,
+            score: currentUserScore,
+        };
+
+        highScores.push(newScore);
+        var sortedHighScores = highScores.sort((a, b) =>
+        a.score < b.score ? 1 : -1
+        );
+        localStorage.setItem("highScores", JSON.stringify(sortedHighScores));
+    }
+
+    finalScoreScreen.setAttribute("style", "display: none;");
+    mainScreen.setAttribute("style", "display: none;");
+    console.log(highScores);
+});
